@@ -2,6 +2,7 @@ from typing import Dict, Any, Optional
 
 from aiogram.fsm.storage.base import BaseStorage, StorageKey, StateType
 
+from src.loggers import logger
 from src.services.user_state import UserStateService
 
 
@@ -11,16 +12,28 @@ class PgSQLUserStateStorage(BaseStorage):
         self.user_state_service = user_state_service
 
     async def set_state(self, key: StorageKey, state: StateType = None) -> None:
-        await self.user_state_service.set_state(key, state)
+        try:
+            await self.user_state_service.set_state(key, state)
+        except Exception as e:
+            logger.critical(e)
 
     async def get_state(self, key: StorageKey) -> Optional[str]:
-        return await self.user_state_service.get_state(key)
+        try:
+            return await self.user_state_service.get_state(key)
+        except Exception as e:
+            logger.critical(e)
 
     async def set_data(self, key: StorageKey, data: Dict[str, Any]) -> None:
-        await self.user_state_service.set_data(key, data)
+        try:
+            await self.user_state_service.set_data(key, data)
+        except Exception as e:
+            logger.critical(e)
 
     async def get_data(self, key: StorageKey) -> Dict[str, Any]:
-        return await self.user_state_service.get_data(key)
+        try:
+            return await self.user_state_service.get_data(key)
+        except Exception as e:
+            logger.critical(e)
 
     async def close(self) -> None:
         pass

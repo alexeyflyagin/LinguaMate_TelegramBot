@@ -1,5 +1,3 @@
-from asyncio import CancelledError
-
 from aiogram import Dispatcher, Bot
 from aiogram.fsm.storage.base import BaseStorage
 
@@ -29,4 +27,5 @@ class LinguaMateBot:
         logger.info(f'{bot_name.name} bot is ended.')
 
     async def run(self):
+        await self.bot.delete_webhook(drop_pending_updates=True)
         await self.dp.start_polling(self.bot)

@@ -1,25 +1,18 @@
 import asyncio
-import logging
-import sys
 from asyncio import CancelledError
 
 from src.bot.bot import LinguaMateBot
 from src.di.container import di
 
-logging.getLogger('aiogram').setLevel(level=logging.CRITICAL)
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s | %(levelname)s | %(filename)s:%(lineno)d - %(message)s",
-    handlers=[logging.StreamHandler(sys.stdout)],
-)
-
-bot: LinguaMateBot = di.lingua_mate_bot()
-
 
 async def main():
+    bot: LinguaMateBot = di.lingua_mate_bot()
     try:
+        await di.session_manager().test_connection()
         await bot.run()
     except CancelledError:
+        pass
+    finally:
         await di.session_manager().disconnect()
 
 
