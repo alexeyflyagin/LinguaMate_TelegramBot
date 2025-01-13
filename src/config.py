@@ -15,6 +15,7 @@ load_dotenv(ENV_PATH)
 
 BOT_TOKEN = os.getenv('BOT_TOKEN')
 DB_URL = os.getenv('DB_URL')
+LINGUAMATE_API_URL = os.getenv('LINGUAMATE_API_URL')
 
 logging.getLogger('aiogram').setLevel(level=logging.WARNING)
 logging.getLogger('asyncio').setLevel(level=logging.WARNING)
