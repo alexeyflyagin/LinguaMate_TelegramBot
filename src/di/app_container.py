@@ -1,10 +1,14 @@
 from dependency_injector import containers, providers
 
-import src.bot.handlers.auth
 from src import config
+from src.bot import handlers
 from src.di.bot_container import BotContainer
 from src.di.data_container import DataContainer
 from src.di.service_container import ServiceContainer
+
+
+def inject_into_routers():
+    handlers.auth.auth_service = di.service.auth_service()
 
 
 class AppContainer(containers.DeclarativeContainer):
@@ -21,4 +25,4 @@ di.config.BOT_TOKEN.from_value(config.BOT_TOKEN)
 di.config.DB_URL.from_value(config.DB_URL)
 di.config.LINGUA_MATE_API_URL.from_value(config.LINGUAMATE_API_URL)
 
-src.bot.handlers.auth.auth_service = di.service.auth_service()
+inject_into_routers()

@@ -5,7 +5,7 @@ from src.linguamate.exceptions import LinguaMateAPIError, LinguaMateNotFoundErro
     UnexpectedStatusError, LinguaMateNetworkError, LinguaMateConflictError
 from src.linguamate.models.auth import AuthData, AuthResponse, SignupData
 from src.linguamate.services.utils import unexpected_error_log_text
-from src.loggers import logger
+from src.loggers import service_logger
 
 
 class AuthService:
@@ -36,16 +36,13 @@ class AuthService:
                 else:
                     raise UnexpectedStatusError(response.status, res_json)
         except LinguaMateNotFoundError as e:
-            logger.debug(e)
+            service_logger.debug(e)
             raise
-        except LinguaMateBadRequestError as e:
-            logger.error(e)
-            raise
-        except LinguaMateNetworkError as e:
-            logger.error(e)
+        except (LinguaMateBadRequestError, LinguaMateNetworkError) as e:
+            service_logger.error(e)
             raise
         except Exception as e:
-            logger.exception(unexpected_error_log_text(e))
+            service_logger.exception(unexpected_error_log_text(e))
             raise LinguaMateAPIError(str(e))
 
     async def signup(self, data: SignupData):
@@ -71,14 +68,11 @@ class AuthService:
                 else:
                     raise UnexpectedStatusError(response.status, res_json)
         except LinguaMateConflictError as e:
-            logger.debug(e)
+            service_logger.debug(e)
             raise
-        except LinguaMateBadRequestError as e:
-            logger.error(e)
-            raise
-        except LinguaMateNetworkError as e:
-            logger.error(e)
+        except (LinguaMateBadRequestError, LinguaMateNetworkError) as e:
+            service_logger.error(e)
             raise
         except Exception as e:
-            logger.exception(unexpected_error_log_text(e))
+            service_logger.exception(unexpected_error_log_text(e))
             raise LinguaMateAPIError(str(e))

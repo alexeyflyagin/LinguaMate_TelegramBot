@@ -1,7 +1,7 @@
 from sqlalchemy import text
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
 
-from src.loggers import logger
+from src.loggers import service_logger
 
 
 class SessionManager:
@@ -21,11 +21,11 @@ class SessionManager:
                 result = await s.execute(text(f"SELECT {expected}"))
                 if result.scalar() != expected:
                     raise ConnectionError('The connection to the database is established incorrectly.')
-                logger.info('The connection to the database is established.')
+                service_logger.info('The connection to the database is established.')
         except Exception as e:
-            logger.critical(e)
+            service_logger.critical(e)
             raise
 
     async def disconnect(self):
         await self._engine.dispose()
-        logger.info('The connection to the database is closed.')
+        service_logger.info('The connection to the database is closed.')

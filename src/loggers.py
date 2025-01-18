@@ -1,3 +1,4 @@
 import logging
 
-logger = logging.getLogger('LinguaMateBot')
+service_logger = logging.getLogger('LinguaMate.Service')
+bot_logger = logging.getLogger('LinguaMate.Bot')

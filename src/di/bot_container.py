@@ -1,5 +1,6 @@
 from dependency_injector import containers, providers
 
+from src.bot import handlers
 from src.bot.bot import LinguaMateBot
 from src.bot.user_state_storage import PgSQLUserStateStorage
 
@@ -16,5 +17,6 @@ class BotContainer(containers.DeclarativeContainer):
     lingua_mate_bot = providers.Factory(
         LinguaMateBot,
         token=config.BOT_TOKEN,
-        storage=user_state_storage
+        storage=user_state_storage,
+        routers=[handlers.auth.router, handlers.last.router]
     )
