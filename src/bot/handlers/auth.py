@@ -7,6 +7,7 @@ from src.bot import sres
 from src.bot.handlers.utils import unknown_error_handling, set_token, set_send_contact_state
 from src.bot.msg_checks.checks import MsgCheckError, check_content_type
 from src.bot.states import AuthStates, MainStates
+from src.bot.utils import esc_md
 from src.linguamate.exceptions import LinguaMateNotFoundError, LinguaMateAPIError
 from src.linguamate.models.auth import AuthData, SignupData
 from src.linguamate.services.auth import AuthService
@@ -34,7 +35,7 @@ async def send_contact__handler(msg: Message, state: FSMContext):
         bot_logger.debug(f"Authorization was successful.")
         await set_token(state, response.token)
         await state.set_state(MainStates.Main)
-        await msg.answer(text=sres.AUTH.SUCCESS.format(nickname=response.nickname),
+        await msg.answer(text=sres.AUTH.SUCCESS.format(nickname=esc_md(response.nickname)),
                          reply_markup=ReplyKeyboardRemove(), parse_mode=ParseMode.MARKDOWN)
     except MsgCheckError:
         await set_send_contact_state(msg, state)
