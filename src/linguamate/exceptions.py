@@ -26,3 +26,8 @@ class LinguaMateConflictError(LinguaMateAPIError):
 class LinguaMateBadRequestError(LinguaMateAPIError):
     def __init__(self, response):
         super().__init__(f"A bad request error occurred. Response: {response}")
+
+
+class LinguaMateInvalidTokenError(LinguaMateAPIError):
+    def __init__(self, response):
+        super().__init__(f"The token is incorrect. Response: {response}")

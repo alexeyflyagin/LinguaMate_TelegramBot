@@ -4,7 +4,7 @@ class GENERAL:
 
 class AUTH:
     SEND_CONTACT_REQUEST = "*You're not authorized.* Please send me your contact info for authorization."
-    SUCCESS = "🎉 *You have successfully logged in.* Hello!"
+    SUCCESS = "🎉 *You have successfully logged in.* Hello {nickname}!"
 
     class BTN:
         SEND_CONTACT = "✅ Send my contact"

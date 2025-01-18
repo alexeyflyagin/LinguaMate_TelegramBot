@@ -4,7 +4,7 @@ from aiogram.fsm.context import FSMContext
 from aiogram.types import Message, ReplyKeyboardRemove
 
 from src.bot import sres
-from src.bot.handlers.utils import unknown_error_handling, set_token, send_contact_request
+from src.bot.handlers.utils import unknown_error_handling, set_token, set_send_contact_state
 from src.bot.msg_checks.checks import MsgCheckError, check_content_type
 from src.bot.states import AuthStates, MainStates
 from src.linguamate.exceptions import LinguaMateNotFoundError, LinguaMateAPIError
@@ -34,9 +34,10 @@ async def send_contact__handler(msg: Message, state: FSMContext):
         bot_logger.debug(f"Authorization was successful.")
         await set_token(state, response.token)
         await state.set_state(MainStates.Main)
-        await msg.answer(text=sres.AUTH.SUCCESS, reply_markup=ReplyKeyboardRemove(), parse_mode=ParseMode.MARKDOWN)
-    except MsgCheckError as e:
-        await send_contact_request(msg, state)
+        await msg.answer(text=sres.AUTH.SUCCESS.format(nickname=response.nickname),
+                         reply_markup=ReplyKeyboardRemove(), parse_mode=ParseMode.MARKDOWN)
+    except MsgCheckError:
+        await set_send_contact_state(msg, state)
     except (LinguaMateAPIError, Exception) as e:
         bot_logger.error(e)
         await unknown_error_handling(msg, state)
