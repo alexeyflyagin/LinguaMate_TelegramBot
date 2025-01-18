@@ -18,5 +18,5 @@ class BotContainer(containers.DeclarativeContainer):
         LinguaMateBot,
         token=config.BOT_TOKEN,
         storage=user_state_storage,
-        routers=[handlers.auth.router, handlers.last.router]
+        routers=[handlers.auth.router, handlers.fast_phrase.router, handlers.last.router]
     )

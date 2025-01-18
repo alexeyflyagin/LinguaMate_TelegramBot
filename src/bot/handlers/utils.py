@@ -25,6 +25,18 @@ async def get_token(state: FSMContext) -> UUID | None:
     return UUID(token) if token else None
 
 
+async def get_checked_token(auth_service: AuthService, state: FSMContext) -> UUID:
+    """
+    :return The token
+
+    :raises LinguaMateInvalidTokenError: if token is not valid
+    :raises LinguaMateAPIError: Unexpected error
+    """
+    token = await get_token(state)
+    await auth_service.check_token(token, raise_if_none=True)
+    return token
+
+
 async def cancel_action(auth_service: AuthService, msg: Message, state: FSMContext):
     try:
         token = await get_token(state)
@@ -32,7 +44,7 @@ async def cancel_action(auth_service: AuthService, msg: Message, state: FSMConte
         await state.set_state(MainStates.Main)
         await msg.answer(text=sres.GENERAL.ACTION_CANCELED)
     except LinguaMateInvalidTokenError as e:
-        bot_logger.debug("The token is not valid.")
+        bot_logger.debug(e)
         await set_send_contact_state(msg, state)
     except (LinguaMateAPIError, Exception) as e:
         bot_logger.error(e)
@@ -47,6 +59,13 @@ async def unknown_error_handling(
     await msg.answer(text=sres.ERROR.UNEXPECTED)
     if auth_service_for_cancel:
         await cancel_action(auth_service_for_cancel, msg, state)
+
+
+async def invalid_token_error_handling(
+        msg: Message,
+        state: FSMContext,
+):
+    await set_send_contact_state(msg, state)
 
 
 async def set_send_contact_state(msg: Message, state: FSMContext):

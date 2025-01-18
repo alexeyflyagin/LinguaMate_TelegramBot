@@ -9,6 +9,8 @@ from src.di.service_container import ServiceContainer
 
 def inject_into_routers():
     handlers.auth.auth_service = di.service.auth_service()
+    handlers.fast_phrase.auth_service = di.service.auth_service()
+    handlers.fast_phrase.phrase_service = di.service.phrase_service()
 
 
 class AppContainer(containers.DeclarativeContainer):

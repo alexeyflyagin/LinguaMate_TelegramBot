@@ -78,6 +78,7 @@ class AuthService:
         :param token:
         :param raise_if_none: raise LinguaMateInvalidTokenError if it's True and token is not valid
 
+        :raises LinguaMateInvalidTokenError:
         :raises LinguaMateBadRequestError:
         :raises LinguaMateNetworkError:
         :raises LinguaMateAPIError: Unexpected errors
