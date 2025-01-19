@@ -26,7 +26,7 @@ class LinguaMateBot:
         self.dp.include_routers(*routers)
 
     async def _set_commands(self):
-        command_list = [commands.PHRASE]
+        command_list = [commands.ADD_PHRASE, commands.ADD_PHRASE_MODE]
         await self.bot.set_my_commands(command_list)
 
     async def _startup(self):

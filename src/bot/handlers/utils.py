@@ -37,12 +37,17 @@ async def get_checked_token(auth_service: AuthService, state: FSMContext) -> UUI
     return token
 
 
-async def cancel_action(auth_service: AuthService, msg: Message, state: FSMContext):
+async def cancel_action(
+        auth_service: AuthService,
+        msg: Message,
+        state: FSMContext,
+        cancel_text: str | None = None
+):
     try:
         token = await get_token(state)
         await auth_service.check_token(token)
         await state.set_state(MainStates.Main)
-        await msg.answer(text=sres.GENERAL.ACTION_CANCELED)
+        await msg.answer(text=cancel_text or sres.GENERAL.ACTION_CANCELED)
     except LinguaMateInvalidTokenError as e:
         bot_logger.debug(e)
         await set_send_contact_state(msg, state)

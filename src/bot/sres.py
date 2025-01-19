@@ -18,7 +18,17 @@ class PHRASE:
             NO_ARGS = "🤨 A new phrase was expected after the command...\n e.g.: `/phrase new phrase::новая фраза::еще один перевод`"
             INCORRECT_ARGS = "🤨 There is an error in the format of the new phrase. Please check and try again...\ne.g.: `/phrase new phrase::новая фраза::еще один перевод`"
             NO_TRANSLATION = "🤨 At least one translation is required. Please try again...\ne.g.: `/phrase new phrase::новая фраза::еще один перевод`"
-            ALREADY_EXIST = "🤨 Ops! This phrase *already exists in your phrasebook*."
+            ALREADY_EXISTS = "🤨 Ops! This phrase *already exists in your phrasebook*."
+
+    class ADD_MODE:
+        ENTER_PHRASE = "✏️ *The phrase-adding mode is activated.* Enter the phrases one by one...\n/exit — leave the phrase-adding mode."
+        SUCCESS = "✅ *Successfull*! Added {added_count} phrase(s)\n/exit — leave the phrase-adding mode."
+        EXIT = "You exited the phrase-adding mode 👌"
+
+        class ERROR:
+            INCORRECT_CONTENT = "🤨 There is an error in the format of the new phrase. Please check and try again...\ne.g.:\n`/phrase new phrase::новая фраза::еще один перевод\n/let's start!::давай начнём!\n/exit — leave the phrase-adding mode."
+            NO_TRANSLATION = "🤨 At least one translation is required. Please try again...\ne.g.: `/phrase new phrase::новая фраза::еще один перевод`\n/exit — leave the phrase-adding mode."
+            ALREADY_EXIST = "🤨 Ops! These phrases *already exist in your phrasebook*.\n/exit — leave the phrase-adding mode."
 
 
 class CHECK:
