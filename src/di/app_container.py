@@ -17,7 +17,7 @@ class AppContainer(containers.DeclarativeContainer):
     config = providers.Configuration()
 
     data: DataContainer = providers.Container(DataContainer, config=config)
-    service: ServiceContainer = providers.Container(ServiceContainer, data_container=data)
+    service: ServiceContainer = providers.Container(ServiceContainer, config=config, data_container=data)
     bot: BotContainer = providers.Container(BotContainer, config=config, service_container=service)
 
 
@@ -25,6 +25,7 @@ di = AppContainer()
 
 di.config.BOT_TOKEN.from_value(config.BOT_TOKEN)
 di.config.DB_URL.from_value(config.DB_URL)
-di.config.LINGUA_MATE_API_URL.from_value(config.LINGUAMATE_API_URL)
+di.config.LINGUAMATE_API__URL.from_value(config.LINGUAMATE_API__URL)
+di.config.LINGUAMATE_API__BOT_KEY.from_value(config.LINGUAMATE_API__BOT_KEY)
 
 inject_into_routers()

@@ -14,5 +14,5 @@ class DataContainer(containers.DeclarativeContainer):
 
     lingua_mate_http_client = providers.Singleton(
         HTTPClient,
-        base_url=config.LINGUA_MATE_API_URL
+        base_url=config.LINGUAMATE_API__URL
     )

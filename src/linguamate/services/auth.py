@@ -4,7 +4,7 @@ import aiohttp
 
 from src.base.http_client import HTTPClient
 from src.linguamate.exceptions import LinguaMateAPIError, LinguaMateNotFoundError, LinguaMateBadRequestError, \
-    LinguaMateNetworkError, LinguaMateConflictError, LinguaMateInvalidTokenError
+    LinguaMateNetworkError, LinguaMateConflictError, LinguaMateInvalidTokenError, LinguaMateForbiddenError
 from src.linguamate.models.auth import AuthData, AuthResponse, SignupData, CheckTokenResponse
 from src.linguamate.services.utils import unexpected_error_log_text, default_check_status_codes
 from src.loggers import service_logger
@@ -12,7 +12,8 @@ from src.loggers import service_logger
 
 class AuthService:
 
-    def __init__(self, http_client: HTTPClient):
+    def __init__(self, http_client: HTTPClient, bot_key: UUID):
+        self.bot_key = bot_key
         self._http_client = http_client
 
     async def auth(self, data: AuthData) -> AuthResponse:
@@ -46,7 +47,8 @@ class AuthService:
 
     async def signup(self, data: SignupData):
         """
-        :raises LinguaMateConflictError: Account already exists.
+        :raises LinguaMateForbiddenError: If the bot key is invalid
+        :raises LinguaMateConflictError: If account already exists
         :raises LinguaMateBadRequestError:
         :raises LinguaMateNetworkError:
         :raises LinguaMateAPIError: Unexpected errors
@@ -54,19 +56,21 @@ class AuthService:
         try:
             async with await self._http_client.session as s:
                 try:
-                    response = await s.post(url=f'/signup/', json=data.model_dump())
+                    response = await s.post(url=f'/{self.bot_key}/signup/', json=data.model_dump())
                 except aiohttp.ClientError as e:
                     raise LinguaMateNetworkError(e)
                 res_json = await response.json()
-                default_check_status_codes(response.status, res_json, ignore=[409])
+                default_check_status_codes(response.status, res_json, ignore=[409, 403])
                 if response.status == 200:
                     return
+                elif response.status == 403:
+                    raise LinguaMateForbiddenError("The bot key is invalid.")
                 elif response.status == 409:
                     raise LinguaMateConflictError("Account already exists.")
         except LinguaMateConflictError as e:
             service_logger.debug(e)
             raise
-        except (LinguaMateBadRequestError, LinguaMateNetworkError) as e:
+        except (LinguaMateBadRequestError, LinguaMateNetworkError, LinguaMateForbiddenError) as e:
             service_logger.error(e)
             raise
         except Exception as e:

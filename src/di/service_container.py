@@ -1,3 +1,5 @@
+from uuid import UUID
+
 from dependency_injector import containers, providers
 
 from src.linguamate.services.auth import AuthService
@@ -6,6 +8,7 @@ from src.services.user_state import UserStateService
 
 
 class ServiceContainer(containers.DeclarativeContainer):
+    config = providers.Configuration()
     data_container = providers.DependenciesContainer()
 
     user_state_service = providers.Factory(
@@ -16,6 +19,7 @@ class ServiceContainer(containers.DeclarativeContainer):
     auth_service = providers.Factory(
         AuthService,
         http_client=data_container.lingua_mate_http_client,
+        bot_key=config.LINGUAMATE_API__BOT_KEY,
     )
 
     phrase_service = providers.Factory(

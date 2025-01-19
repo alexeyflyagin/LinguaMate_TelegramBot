@@ -23,6 +23,11 @@ class LinguaMateConflictError(LinguaMateAPIError):
         super().__init__(*args)
 
 
+class LinguaMateForbiddenError(LinguaMateAPIError):
+    def __init__(self, *args):
+        super().__init__(*args)
+
+
 class LinguaMateBadRequestError(LinguaMateAPIError):
     def __init__(self, response):
         super().__init__(f"A bad request error occurred. Response: {response}")

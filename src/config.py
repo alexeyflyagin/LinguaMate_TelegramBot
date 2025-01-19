@@ -2,6 +2,8 @@ import logging
 import os
 import sys
 from pathlib import Path
+from uuid import UUID
+
 from dotenv import load_dotenv
 
 ROOT_PATH = Path(__file__).parent.parent
@@ -15,7 +17,8 @@ load_dotenv(ENV_PATH)
 
 BOT_TOKEN = os.getenv('BOT_TOKEN')
 DB_URL = os.getenv('DB_URL')
-LINGUAMATE_API_URL = os.getenv('LINGUAMATE_API_URL')
+LINGUAMATE_API__URL = os.getenv('LINGUAMATE_API__URL')
+LINGUAMATE_API__BOT_KEY = UUID(os.getenv('LINGUAMATE_API__BOT_KEY'))
 
 logging.getLogger('aiogram').setLevel(level=logging.WARNING)
 logging.getLogger('asyncio').setLevel(level=logging.WARNING)
