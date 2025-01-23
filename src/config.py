@@ -18,7 +18,7 @@ load_dotenv(ENV_PATH)
 BOT_TOKEN = os.getenv('BOT_TOKEN')
 DB_URL = os.getenv('DB_URL')
 LINGUAMATE_API__URL = os.getenv('LINGUAMATE_API__URL')
-LINGUAMATE_API__BOT_KEY = UUID(os.getenv('LINGUAMATE_API__BOT_KEY'))
+LINGUAMATE_API__TRUSTED_KEY = UUID(os.getenv('LINGUAMATE_API__TRUSTED_KEY'))
 
 logging.getLogger('aiogram').setLevel(level=logging.WARNING)
 logging.getLogger('asyncio').setLevel(level=logging.WARNING)

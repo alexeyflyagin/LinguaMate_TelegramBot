@@ -22,6 +22,7 @@ class BotContainer(containers.DeclarativeContainer):
             handlers.auth.router,
             handlers.fast_phrase.router,
             handlers.add_phrase_mode.router,
+            handlers.flow_phrase.router,
             handlers.last.router,
         ]
     )

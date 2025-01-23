@@ -28,6 +28,11 @@ class LinguaMateForbiddenError(LinguaMateAPIError):
         super().__init__(*args)
 
 
+class LinguaMateInvalidTrustedKeyError(LinguaMateForbiddenError):
+    def __init__(self):
+        super().__init__("The trusted key is invalid.")
+
+
 class LinguaMateBadRequestError(LinguaMateAPIError):
     def __init__(self, response):
         super().__init__(f"A bad request error occurred. Response: {response}")

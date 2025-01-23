@@ -19,7 +19,7 @@ class ServiceContainer(containers.DeclarativeContainer):
     auth_service = providers.Factory(
         AuthService,
         http_client=data_container.lingua_mate_http_client,
-        bot_key=config.LINGUAMATE_API__BOT_KEY,
+        trusted_key=config.LINGUAMATE_API__TRUSTED_KEY,
     )
 
     phrase_service = providers.Factory(

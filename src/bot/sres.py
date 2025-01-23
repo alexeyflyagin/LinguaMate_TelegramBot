@@ -11,6 +11,19 @@ class AUTH:
 
 
 class PHRASE:
+    class FLOW_PHRASE:
+        PHRASE = "Phrase:\n`{phrase}`"
+        PHRASE_TRANSLATE = f"`{{translation}}`"
+        ABOUT = "Phrase:\n`{phrase}`\n\n*Translations*:\n{translations}"
+
+        class BTN:
+            REMEMBER = "🟢 Remember"
+            FORGOT = "🔴 Forgot"
+            OKAY = "✅ Okay >>"
+
+        class ERROR:
+            PHRASEBOOK_IS_EMPTY = "🤨 Ops! Your phrasebook is empty... Please add a new phrase by /phrase or /phrase"
+
     class ADD_FAST:
         SUCCESS = "✅ The new phrase has been *successfully added*!"
 
@@ -26,8 +39,8 @@ class PHRASE:
         EXIT = "You exited the phrase-adding mode 👌"
 
         class ERROR:
-            INCORRECT_CONTENT = "🤨 There is an error in the format of the new phrase. Please check and try again...\ne.g.:\n`/phrase new phrase::новая фраза::еще один перевод\n/let's start!::давай начнём!\n/exit — leave the phrase-adding mode."
-            NO_TRANSLATION = "🤨 At least one translation is required. Please try again...\ne.g.: `/phrase new phrase::новая фраза::еще один перевод`\n/exit — leave the phrase-adding mode."
+            INCORRECT_CONTENT = "🤨 There is an error in the format of the new phrase. Please check and try again...\ne.g.:\n`new phrase::новая фраза::еще один перевод\n/let's start!::давай начнём!\n/exit — leave the phrase-adding mode."
+            NO_TRANSLATION = "🤨 At least one translation is required. Please try again...\ne.g.: `new phrase::новая фраза::еще один перевод`\n/exit — leave the phrase-adding mode."
             ALREADY_EXIST = "🤨 Ops! These phrases *already exist in your phrasebook*.\n/exit — leave the phrase-adding mode."
 
 

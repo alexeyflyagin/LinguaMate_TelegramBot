@@ -2,7 +2,7 @@ from uuid import UUID
 
 from aiogram.enums import ParseMode
 from aiogram.fsm.context import FSMContext
-from aiogram.types import Message
+from aiogram.types import Message, CallbackQuery
 
 from src.bot import sres, keyboards
 from src.bot.states import AuthStates, MainStates
@@ -66,11 +66,28 @@ async def unknown_error_handling(
         await cancel_action(auth_service_for_cancel, msg, state)
 
 
+async def unknown_error_callback_handling(
+        callback: CallbackQuery,
+        state: FSMContext,
+        auth_service_for_cancel: AuthService | None = None
+):
+    await unknown_error_handling(callback.message, state, auth_service_for_cancel=auth_service_for_cancel)
+    await callback.answer()
+
+
 async def invalid_token_error_handling(
         msg: Message,
         state: FSMContext,
 ):
     await set_send_contact_state(msg, state)
+
+
+async def invalid_token_error_callback_handling(
+        callback: CallbackQuery,
+        state: FSMContext,
+):
+    await invalid_token_error_handling(callback.message, state)
+    await callback.answer()
 
 
 async def set_send_contact_state(msg: Message, state: FSMContext):

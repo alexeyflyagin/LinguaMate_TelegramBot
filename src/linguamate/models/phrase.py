@@ -17,3 +17,15 @@ class AddPhraseResponse(BaseModel):
 class AddPhrasesResponse(BaseModel):
     added_ids: dict[str, int]
     already_exists: list[str]
+
+
+class PhraseEntity(BaseModel):
+    id: int
+    account_id: int
+    phrase: str
+    phrase_lower: str
+    translations: list[str]
+
+
+class GetFlowPhraseResponse(BaseModel):
+    phrase: PhraseEntity
