@@ -1,3 +1,6 @@
+from textwrap import dedent
+
+
 class GENERAL:
     ACTION_CANCELED = "The current action has been cancelled 👌"
 
@@ -12,14 +15,24 @@ class AUTH:
 
 class PHRASE:
     class FLOW_PHRASE:
-        PHRASE = "Phrase:\n`{phrase}`"
+        PHRASE = """📚 *Your phrase*:\n`{phrase}`\n\nDo you know it? 👇"""
         PHRASE_TRANSLATE = f"`{{translation}}`"
-        ABOUT = "Phrase:\n`{phrase}`\n\n*Translations*:\n{translations}"
+        ABOUT = dedent("""\
+        ❓ *You selected "Don't remember". Here’s more info:*
+        
+        📖 _Phrase_:  
+        `{phrase}`
+
+        🗣️ _Translation_:  
+        {translations}
+
+        Ready for another one? 😊
+        """)
 
         class BTN:
-            REMEMBER = "🟢 Remember"
-            FORGOT = "🔴 Forgot"
-            OKAY = "✅ Okay >>"
+            REMEMBER = "🟢 Know"
+            FORGOT = "🔴 Don't remember"
+            OKAY = "Next phrase »"
 
         class ERROR:
             PHRASEBOOK_IS_EMPTY = "🤨 Ops! Your phrasebook is empty... Please add a new phrase by /phrase or /phrase"

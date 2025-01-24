@@ -1,7 +1,7 @@
 from dependency_injector import containers, providers
 
-from src.base.http_client import HTTPClient
 from src.data.session_manager import SessionManager
+from src.linguamate.http_client import LinguaMateHTTPClient
 
 
 class DataContainer(containers.DeclarativeContainer):
@@ -13,6 +13,7 @@ class DataContainer(containers.DeclarativeContainer):
     )
 
     lingua_mate_http_client = providers.Singleton(
-        HTTPClient,
-        base_url=config.LINGUAMATE_API__URL
+        LinguaMateHTTPClient,
+        base_url=config.LINGUAMATE_API__URL,
+        timeout=60,
     )
