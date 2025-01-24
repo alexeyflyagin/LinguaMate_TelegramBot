@@ -15,27 +15,23 @@ class AUTH:
 
 class PHRASE:
     class FLOW_PHRASE:
-        PHRASE = """📚 *Your phrase*:\n`{phrase}`\n\nDo you know it? 👇"""
-        PHRASE_TRANSLATE = f"`{{translation}}`"
+        PHRASE = """`{phrase}`\n\n—\nDo you know it? 👇"""
+        PHRASE_TRANSLATE = f"""\"_{{translation}}_\""""
         ABOUT = dedent("""\
-        ❓ *You selected "Don't remember". Here’s more info:*
-        
-        📖 _Phrase_:  
         `{phrase}`
-
-        🗣️ _Translation_:  
-        {translations}
-
+        
+        *Translation*:  {translations}
+        —
         Ready for another one? 😊
         """)
 
         class BTN:
             REMEMBER = "🟢 Know"
-            FORGOT = "🔴 Don't remember"
+            FORGOT = "🔴 Forgot"
             OKAY = "Next phrase »"
 
         class ERROR:
-            PHRASEBOOK_IS_EMPTY = "🤨 Ops! Your phrasebook is empty... Please add a new phrase by /phrase or /phrase"
+            PHRASEBOOK_IS_EMPTY = "🤨 Ops! Your phrasebook is empty... Please add a new phrase using /addphrase or /addphrasemode commands."
 
     class ADD_FAST:
         SUCCESS = "✅ The new phrase has been *successfully added*!"

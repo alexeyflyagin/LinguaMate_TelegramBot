@@ -21,7 +21,7 @@ def flow_phrase_about__view(data: FlowPhraseAboutViewData) -> View:
     escape_translations = []
     for translation in data.phrase.translations:
         escape_translations.append(sres.PHRASE.FLOW_PHRASE.PHRASE_TRANSLATE.format(translation=esc_md(translation)))
-    translations = '\n'.join(escape_translations)
+    translations = ', '.join(escape_translations)
     phrase = esc_md(data.phrase.phrase)
     return View(
         view_type=ViewType.TEXT,
