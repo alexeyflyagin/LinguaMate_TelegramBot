@@ -1,11 +1,10 @@
 from aiogram import Router, F
-from aiogram.filters import Command
 from aiogram.fsm.context import FSMContext
 from aiogram.types import Message, CallbackQuery
 
-from src.bot import commands, sres
 from src.bot.handlers.utils import get_checked_token, invalid_token_error_handling, unknown_error_handling, \
     unknown_error_callback_handling, invalid_token_error_callback_handling
+from src.bot.resourses.strings import sres
 from src.bot.states import MainStates
 from src.bot.views.callbacks.flow_phrase import FlowPhraseCD
 from src.bot.views.flow_phrase import flow_phrase__view, flow_phrase_about__view
@@ -21,16 +20,16 @@ auth_service: AuthService
 phrase_service: PhraseService
 
 
-@router.message(MainStates.Main, Command(commands.FLOW_PHRASE))
+@router.message(MainStates.Main, F.text == sres.GENERAL.BTN.PHRASE_FLOW)
 async def flow_phrase_command__handler(msg: Message, state: FSMContext):
     try:
-        token = await get_checked_token(auth_service, state)
+        token = await get_checked_token(state)
         flow_phrase = await phrase_service.get_flow_phrase(token)
         view = flow_phrase__view(data=FlowPhraseViewData(id=flow_phrase.phrase.id, phrase=flow_phrase.phrase.phrase))
         await answer_view(msg, view)
     except LinguaMateNotFoundError as e:
         bot_logger.debug(e)
-        await msg.answer(text=sres.PHRASE.FLOW_PHRASE.ERROR.PHRASEBOOK_IS_EMPTY)
+        await msg.answer(text=sres.PHRASE.PHRASE_FLOW.ERROR.PHRASEBOOK_IS_EMPTY)
     except LinguaMateInvalidTokenError as e:
         bot_logger.debug(e)
         await invalid_token_error_handling(msg, state)
@@ -42,7 +41,7 @@ async def flow_phrase_command__handler(msg: Message, state: FSMContext):
 @router.callback_query(FlowPhraseCD.filter())
 async def flow_phrase__callback(callback: CallbackQuery, state: FSMContext):
     try:
-        token = await get_checked_token(auth_service, state)
+        token = await get_checked_token(state)
         data = FlowPhraseCD.unpack(callback.data)
 
         if data.action == data.Action.REMEMBER:
@@ -60,7 +59,7 @@ async def flow_phrase__callback(callback: CallbackQuery, state: FSMContext):
                 await callback.answer()
             except LinguaMateNotFoundError as e:
                 bot_logger.debug(e)
-                await callback.answer(text=sres.PHRASE.FLOW_PHRASE.ERROR.PHRASEBOOK_IS_EMPTY)
+                await callback.answer(text=sres.PHRASE.PHRASE_FLOW.ERROR.PHRASEBOOK_IS_EMPTY)
                 flow_phrase = await phrase_service.get_flow_phrase(token)
                 view_data = FlowPhraseViewData(id=flow_phrase.phrase.id, phrase=flow_phrase.phrase.phrase)
                 view = flow_phrase__view(data=view_data)
@@ -75,7 +74,7 @@ async def flow_phrase__callback(callback: CallbackQuery, state: FSMContext):
 
     except LinguaMateNotFoundError as e:
         bot_logger.debug(e)
-        await callback.answer(text=sres.PHRASE.FLOW_PHRASE.ERROR.PHRASEBOOK_IS_EMPTY)
+        await callback.answer(text=sres.PHRASE.PHRASE_FLOW.ERROR.PHRASEBOOK_IS_EMPTY)
     except LinguaMateInvalidTokenError as e:
         bot_logger.debug(e)
         await invalid_token_error_callback_handling(callback, state)

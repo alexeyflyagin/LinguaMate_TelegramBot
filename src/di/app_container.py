@@ -9,15 +9,20 @@ from src.di.service_container import ServiceContainer
 
 def inject_into_routers():
     handlers.auth.auth_service = di.service.auth_service()
+    handlers.auth.account_service = di.service.account_service()
 
     handlers.fast_phrase.auth_service = di.service.auth_service()
     handlers.fast_phrase.phrase_service = di.service.phrase_service()
 
-    handlers.add_phrase_mode.auth_service = di.service.auth_service()
     handlers.add_phrase_mode.phrase_service = di.service.phrase_service()
 
     handlers.flow_phrase.auth_service = di.service.auth_service()
     handlers.flow_phrase.phrase_service = di.service.phrase_service()
+
+    handlers.last.account_service = di.service.account_service()
+
+    handlers.utils.account_service = di.service.account_service()
+    handlers.utils.auth_service = di.service.auth_service()
 
 
 class AppContainer(containers.DeclarativeContainer):

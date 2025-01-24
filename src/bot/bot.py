@@ -1,7 +1,7 @@
 from aiogram import Dispatcher, Bot, Router
 from aiogram.fsm.storage.base import BaseStorage
 
-from src.bot import commands
+from src.bot.resourses import commands
 from src.loggers import bot_logger
 
 
@@ -26,7 +26,7 @@ class LinguaMateBot:
         self.dp.include_routers(*routers)
 
     async def _set_commands(self):
-        command_list = [commands.ADD_PHRASE, commands.ADD_PHRASE_MODE, commands.FLOW_PHRASE]
+        command_list = [commands.ADD_PHRASE]
         await self.bot.set_my_commands(command_list)
 
     async def _startup(self):

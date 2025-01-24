@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 
-from src.bot import sres
+from src.bot.resourses.strings import sres
 
 
 class ParseError(Exception):

@@ -4,8 +4,7 @@ import aiohttp
 
 from src.base.http_client import HTTPClient
 from src.linguamate.exceptions import LinguaMateAPIError, LinguaMateNotFoundError, LinguaMateBadRequestError, \
-    LinguaMateNetworkError, LinguaMateConflictError, LinguaMateInvalidTokenError, LinguaMateForbiddenError, \
-    LinguaMateInvalidTrustedKeyError
+    LinguaMateNetworkError, LinguaMateConflictError, LinguaMateInvalidTokenError, LinguaMateInvalidTrustedKeyError
 from src.linguamate.models.auth import AuthData, AuthResponse, SignupData, CheckTokenResponse
 from src.linguamate.services.utils import unexpected_error_log_text, default_check_status_codes
 from src.loggers import service_logger

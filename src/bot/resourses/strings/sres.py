@@ -3,6 +3,13 @@ from textwrap import dedent
 
 class GENERAL:
     ACTION_CANCELED = "The current action has been cancelled 👌"
+    SELECT_ACTION = "😊 Select an action."
+
+    class BTN:
+        ADD_PHRASE_MODE = "➕ Add phrase mode"
+        MY_PHRASES = "📖 My phrases"
+        PHRASE_FLOW = "🧠 Phrase flow"
+        PROFILE = "👤 Profile"
 
 
 class AUTH:
@@ -14,7 +21,7 @@ class AUTH:
 
 
 class PHRASE:
-    class FLOW_PHRASE:
+    class PHRASE_FLOW:
         PHRASE = """`{phrase}`\n\n—\nDo you know it? 👇"""
         PHRASE_TRANSLATE = f"""\"_{{translation}}_\""""
         ABOUT = dedent("""\

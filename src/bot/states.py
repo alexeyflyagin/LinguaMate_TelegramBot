@@ -6,6 +6,7 @@ class AuthStates(StatesGroup):
 
 class MainStates(StatesGroup):
     Main = State()
+    MyPhrases = State()
 
 class AddPhraseModeStates(StatesGroup):
     EnterPhrase = State()

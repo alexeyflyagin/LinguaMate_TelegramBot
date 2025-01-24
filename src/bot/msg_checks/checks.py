@@ -2,7 +2,7 @@ from aiogram.enums import ContentType
 from aiogram.filters import CommandObject
 from aiogram.types import Message
 
-from src.bot import sres
+from src.bot.resourses.strings import sres
 
 
 class MsgCheckError(Exception):
