@@ -2,7 +2,7 @@ from uuid import UUID
 
 from aiogram.enums import ParseMode
 from aiogram.fsm.context import FSMContext
-from aiogram.fsm.state import StatesGroup, State
+from aiogram.fsm.state import State
 from aiogram.types import Message, CallbackQuery
 
 from src.bot.resourses import keyboards
@@ -51,7 +51,7 @@ async def restore_state(msg: Message, state: FSMContext):
         current_state = await state.get_state()
 
         if current_state == MainStates.Main.state:
-            markup = main_ikb(total_phrases=account_info.total_phrases)
+            markup = main_ikb(total_phrases=account_info.total_phrases, total_words=account_info.total_words)
             await msg.answer(text=sres.GENERAL.SELECT_ACTION, reply_markup=markup)
 
     except LinguaMateInvalidTokenError as e:

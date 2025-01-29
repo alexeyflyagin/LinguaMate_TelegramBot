@@ -38,3 +38,24 @@ class ParsedPhraseData(BaseModel):
             phrase = items.pop(0)
             parsed_phrase_list.append(ParsedPhraseData(phrase=phrase, translations=items))
         return parsed_phrase_list
+
+
+class ParsedWordData(BaseModel):
+    word: str
+    translations: list[str]
+
+    @staticmethod
+    def list_from_str(text: str) -> list["ParsedWordData"]:
+        word_items = [i.strip() for i in text.strip().split("\n")]
+        if len(word_items) == 0:
+            raise ParseError(sres.DICTIONARY.ADD_MODE.ERROR.INCORRECT_CONTENT)
+        parsed_word_list: list[ParsedWordData] = []
+        for word_item in word_items:
+            items = [i.strip() for i in word_item.strip().split("::")]
+            if len(items) == 1:
+                raise ParseError(sres.DICTIONARY.ADD_MODE.ERROR.NO_TRANSLATION)
+            elif len(items) < 1:
+                raise ParseError(sres.DICTIONARY.ADD_MODE.ERROR.INCORRECT_CONTENT)
+            word = items.pop(0)
+            parsed_word_list.append(ParsedWordData(word=word, translations=items))
+        return parsed_word_list

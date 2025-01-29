@@ -1,9 +1,8 @@
-from uuid import UUID
-
 from dependency_injector import containers, providers
 
 from src.linguamate.services.account import AccountService
 from src.linguamate.services.auth import AuthService
+from src.linguamate.services.dictionary import DictionaryService
 from src.linguamate.services.phrase import PhraseService
 from src.services.user_state import UserStateService
 
@@ -30,5 +29,10 @@ class ServiceContainer(containers.DeclarativeContainer):
 
     phrase_service = providers.Factory(
         PhraseService,
+        http_client=data_container.lingua_mate_http_client,
+    )
+
+    dictionary_service = providers.Factory(
+        DictionaryService,
         http_client=data_container.lingua_mate_http_client,
     )

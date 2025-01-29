@@ -1,1 +1,2 @@
 FLOW_PHRASE_CD = 'flPhr'
+WORD_FLOW_CD = 'wrdFl'

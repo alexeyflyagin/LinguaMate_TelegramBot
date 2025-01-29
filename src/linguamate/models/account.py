@@ -6,3 +6,4 @@ class AccountInfoResponse(BaseModel):
     nickname: str
     phone_number: str
     total_phrases: int
+    total_words: int

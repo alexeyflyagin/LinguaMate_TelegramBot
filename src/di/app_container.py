@@ -16,8 +16,13 @@ def inject_into_routers():
 
     handlers.add_phrase_mode.phrase_service = di.service.phrase_service()
 
+    handlers.add_word_mode.dict_service = di.service.dictionary_service()
+
     handlers.flow_phrase.auth_service = di.service.auth_service()
     handlers.flow_phrase.phrase_service = di.service.phrase_service()
+
+    handlers.word_flow.auth_service = di.service.auth_service()
+    handlers.word_flow.dict_service = di.service.dictionary_service()
 
     handlers.last.account_service = di.service.account_service()
 

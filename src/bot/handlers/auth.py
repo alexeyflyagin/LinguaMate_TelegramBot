@@ -1,10 +1,9 @@
 from aiogram import Router
 from aiogram.enums import ContentType, ParseMode
 from aiogram.fsm.context import FSMContext
-from aiogram.types import Message, ReplyKeyboardRemove
+from aiogram.types import Message
 
-from src.bot.handlers.utils import unknown_error_handling, set_token, set_send_contact_state, \
-    invalid_token_error_handling
+from src.bot.handlers.utils import unknown_error_handling, set_token, set_send_contact_state
 from src.bot.msg_checks.checks import MsgCheckError, check_content_type
 from src.bot.resourses.keyboards import main_ikb
 from src.bot.resourses.strings import sres
@@ -37,7 +36,7 @@ async def send_contact__handler(msg: Message, state: FSMContext):
             response = await auth_service.auth(auth_data)
 
         info = await account_service.get_info(response.token)
-        main_markup = main_ikb(total_phrases=info.total_phrases)
+        main_markup = main_ikb(total_phrases=info.total_phrases, total_words=info.total_words)
         bot_logger.debug(f"Authorization was successful.")
 
         await set_token(state, response.token)

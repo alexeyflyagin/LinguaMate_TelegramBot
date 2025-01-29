@@ -1,15 +1,20 @@
-MARKDOWN_V1_CHARS = r"_*[]()"
+import re
+
+MARKDOWN_V1_CHARS = r"_*[]"
 
 
 def esc_md(text: str) -> str:
     """
     It allows escaping MARKDOWN V1.
     """
-    if not (isinstance(text, str)):
-        raise ValueError(f"The value types is incorrect (text={type(text)}")
+    if not isinstance(text, str):
+        raise ValueError(f"The value types is incorrect (text={type(text)})")
 
     for char in MARKDOWN_V1_CHARS:
         text = text.replace(char, f"\\{char}")
+
+    text = re.sub(r"(?<=\[)([\(\)])", r"\\\1", text)
+
     return text
 
 
